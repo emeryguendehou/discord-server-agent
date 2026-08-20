@@ -5,10 +5,15 @@
   "main": "src/cli.ts",
   "scripts": {
     "provision": "tsx src/cli.ts",
-    "news": "tsx src/news-cli.ts",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["discord", "ai-agent", "infrastructure-as-code", "provisioning", "claude-code"],
+  "keywords": [
+    "discord",
+    "ai-agent",
+    "infrastructure-as-code",
+    "provisioning",
+    "claude-code"
+  ],
   "author": "",
   "license": "MIT",
   "type": "module",
@@ -18,7 +23,6 @@
     "discord.js": "^14.27.0",
     "dotenv": "^17.4.2",
     "js-yaml": "^5.3.0",
-    "rss-parser": "^3.13.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

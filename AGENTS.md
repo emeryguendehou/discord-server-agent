@@ -41,7 +41,7 @@ bloc au-delà du premier est **optionnel** — ne le génère que si demandé.
 - Monétisation (Patreon, YouTube Memberships, autre) : quels paliers, quels avantages, quels rôles
   associés ?
 - Modération avancée (AutoMod, bot de modération tiers type Sapphire) ?
-- Contenu automatisé (notifications YouTube, veille d'actualités par IA) ?
+- Notifications de nouveau contenu (YouTube, Twitch...) ?
 - Communauté payante commune à plusieurs offres (type "Espace Membres") ?
 
 ## Étape 2 — Générer les deux documents de spécification
@@ -62,8 +62,6 @@ Depuis `docs/specifications.md`, remplis `config/*.yml` (schéma complet dans
 - `server.yml`, `roles.yml`, `channels.yml`, `permissions.yml` (groupes de rôles réutilisables —
   regarde `resolve.ts` pour comprendre comment `viewGroup`/`sendGroup`/`replyGroup` se résolvent),
   `automod.yml`, `integrations.yml`, `panels.yml`, `partners.yml`, `catalog.yml`.
-- `config/news_sources.yml` **seulement** si la veille automatisée a été demandée — et seulement
-  avec des flux vérifiés individuellement (voir Étape 6).
 
 ## Étape 4 — Dry-run puis validation
 
@@ -103,15 +101,6 @@ dans ce cas. Relance après activation manuelle si besoin.
   vrais IDs dans `reports/state.json` plutôt que de faire chercher l'utilisateur en mode
   développeur. Un règlement long dépasse souvent 2000 caractères (limite d'un message texte brut) :
   utilise le champ **Description d'un Embed** (limite 4096) à la place.
-- **Veille automatisée (optionnelle)** : vérifie chaque flux RSS individuellement (requête HTTP
-  réelle, code 200, contenu XML réel) avant de l'ajouter à `config/news_sources.yml` — ne devine
-  jamais une URL. L'API X/Twitter n'est plus utilisable gratuitement depuis 2023, à exclure
-  systématiquement. `npm run news` utilise l'API gratuite Google Gemini (clé sur
-  aistudio.google.com/apikey) ; les règles créées côté AutoMod Discord sont désactivées par défaut,
-  bien penser `enabled: true`. Une fois `NEWS_CHANNEL_KEY`/`NEWS_ROLE_KEY`/les secrets réellement
-  configurés (repo GitHub + `gh secret set`), décommenter le bloc `schedule:` dans
-  `.github/workflows/news.yml` — il est désactivé par défaut dans ce modèle pour ne pas déclencher
-  d'exécutions/échecs inutiles tant que rien n'est configuré.
 
 ## Étape 7 — Audit final
 

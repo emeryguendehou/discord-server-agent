@@ -16,7 +16,7 @@ Rien n'est jamais fait en douce : chaque changement passe par un `--dry-run` vis
   (forums, annonces) attendent que Community soit activée, sans bloquer le reste.
 - `--audit` : vérifie qui voit quoi avant d'inviter qui que ce soit.
 - Modules optionnels activables uniquement si tu les demandes : monétisation (Patreon, YouTube
-  Memberships), bot de modération tiers, veille d'actualités automatisée par IA.
+  Memberships), bot de modération tiers.
 
 ## Prérequis
 
@@ -44,7 +44,6 @@ Commandes disponibles une fois la configuration prête :
 npm run provision -- --dry-run   # calcule le plan, ne modifie rien (par défaut)
 npm run provision -- --apply     # applique le plan validé
 npm run provision -- --audit     # vérifie la visibilité des salons par rôle
-npm run news                     # module optionnel de veille (si configuré)
 ```
 
 ## Structure
@@ -54,12 +53,11 @@ AGENTS.md            Instructions complètes pour l'agent IA -- à lire en premi
 templates/            Gabarits des 2 documents de spécification générés par l'entretien
 docs/                 specifications.md + cahier_execution.md générés pour TON serveur
 config/               server.yml, roles.yml, channels.yml, permissions.yml, automod.yml,
-                       integrations.yml, panels.yml, partners.yml, catalog.yml, news_sources.yml
+                       integrations.yml, panels.yml, partners.yml, catalog.yml
 src/config/            schémas de validation (zod) + chargeur YAML
 src/discord/            client discord.js, lecture de l'état réel du serveur
 src/provision/          moteur de plan (CREATE/UPDATE/MOVE/NO_CHANGE/MANUAL_ACTION) + application
 src/audit/              simulation de visibilité des salons par rôle
-src/news/               module optionnel de veille automatisée (RSS + résumé IA + publication)
 reports/                state.json (mapping clé -> ID Discord) et rapports générés
 ```
 
@@ -70,5 +68,4 @@ reports/                state.json (mapping clé -> ID Discord) et rapports gén
 - Toute action que l'agent ne peut pas faire lui-même (comptes tiers, dashboards externes) est
   signalée clairement, jamais présentée comme faite si elle ne l'est pas.
 - Modulaire : pas de dépendance imposée à un service payant. Patreon, YouTube, un bot de modération
-  tiers, la veille automatisée — tout est optionnel et n'existe dans ta configuration que si tu l'as
-  demandé.
+  tiers — tout est optionnel et n'existe dans ta configuration que si tu l'as demandé.

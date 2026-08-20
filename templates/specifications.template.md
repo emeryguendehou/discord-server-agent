@@ -62,8 +62,8 @@ rôles associés, règle de cumul entre plateformes.]
 
 ## 11. Contenu automatisé [OPTIONNEL — ne garder que si demandé]
 
-[Notifications de nouveau contenu (YouTube, Twitch...), veille d'actualités par IA (sources,
-fréquence, format de résumé, rôle de notification opt-in).]
+[Notifications de nouveau contenu (YouTube, Twitch...) : salon cible, ping ou non, format du
+message.]
 
 ## 12. Journal des décisions et modifications
 
