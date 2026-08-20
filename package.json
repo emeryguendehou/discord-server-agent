@@ -1,0 +1,30 @@
+{
+  "name": "discord-server-agent",
+  "version": "0.1.0",
+  "description": "Provisioner Infrastructure-as-Code pour serveur Discord, piloté par un agent IA (Claude Code, Codex, ou autre)",
+  "main": "src/cli.ts",
+  "scripts": {
+    "provision": "tsx src/cli.ts",
+    "news": "tsx src/news-cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["discord", "ai-agent", "infrastructure-as-code", "provisioning", "claude-code"],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^6.0.0",
+    "commander": "^15.0.0",
+    "discord.js": "^14.27.0",
+    "dotenv": "^17.4.2",
+    "js-yaml": "^5.3.0",
+    "rss-parser": "^3.13.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}

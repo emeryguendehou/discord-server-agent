@@ -1,0 +1,17 @@
+# Module optionnel de veille automatisée (npm run news). Vide par défaut -- à remplir uniquement si
+# l'utilisateur a demandé cette fonctionnalité pendant l'entretien (voir AGENTS.md).
+#
+# Chaque source DOIT être vérifiée individuellement (requête HTTP réelle, code 200, contenu XML réel)
+# avant d'être ajoutée ici -- ne jamais deviner une URL de flux RSS. Attention : l'API X/Twitter n'est
+# plus utilisable gratuitement depuis 2023, à exclure des sources automatisées.
+#
+# type: rss     -> flux RSS/Atom natif du site
+# type: youtube -> flux Atom officiel YouTube (https://www.youtube.com/feeds/videos.xml?channel_id=UC...)
+#
+# Exemple (à adapter/vérifier, ne pas copier tel quel) :
+# - key: exemple_source
+#   name: "Nom affiché de la source"
+#   type: rss
+#   url: "https://exemple.com/rss.xml"
+
+[]

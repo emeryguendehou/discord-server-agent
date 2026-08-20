@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+reports/plan-*.json
+reports/apply-*.json
+reports/audit-*.json
+reports/news-*.json
+*.log
