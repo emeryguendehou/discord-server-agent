@@ -108,7 +108,10 @@ dans ce cas. Relance après activation manuelle si besoin.
   jamais une URL. L'API X/Twitter n'est plus utilisable gratuitement depuis 2023, à exclure
   systématiquement. `npm run news` utilise l'API gratuite Google Gemini (clé sur
   aistudio.google.com/apikey) ; les règles créées côté AutoMod Discord sont désactivées par défaut,
-  bien penser `enabled: true`.
+  bien penser `enabled: true`. Une fois `NEWS_CHANNEL_KEY`/`NEWS_ROLE_KEY`/les secrets réellement
+  configurés (repo GitHub + `gh secret set`), décommenter le bloc `schedule:` dans
+  `.github/workflows/news.yml` — il est désactivé par défaut dans ce modèle pour ne pas déclencher
+  d'exécutions/échecs inutiles tant que rien n'est configuré.
 
 ## Étape 7 — Audit final
 

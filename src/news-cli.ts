@@ -40,14 +40,31 @@ async function main() {
   const token = process.env.DISCORD_BOT_TOKEN;
   const guildId = process.env.DISCORD_GUILD_ID;
   const geminiKey = process.env.GEMINI_API_KEY;
-  if (!token || !guildId) throw new Error("DISCORD_BOT_TOKEN et DISCORD_GUILD_ID requis dans .env");
-  if (!geminiKey) throw new Error("GEMINI_API_KEY requis dans .env (clé gratuite sur aistudio.google.com/apikey)");
-  if (!CHANNEL_KEY || !ROLE_KEY) {
-    throw new Error(
-      "NEWS_CHANNEL_KEY et NEWS_ROLE_KEY requis dans .env -- doivent correspondre aux clés utilisées dans " +
-        "config/channels.yml et config/roles.yml pour le salon et le rôle de veille."
+
+  // Module optionnel : tant qu'il n'est pas configuré, on s'arrête proprement (succès, pas échec) --
+  // évite de spammer des e-mails d'échec GitHub Actions sur un dépôt où la veille n'a jamais été activée.
+  const missing = [
+    !token && "DISCORD_BOT_TOKEN",
+    !guildId && "DISCORD_GUILD_ID",
+    !geminiKey && "GEMINI_API_KEY",
+    !CHANNEL_KEY && "NEWS_CHANNEL_KEY",
+    !ROLE_KEY && "NEWS_ROLE_KEY",
+  ].filter(Boolean);
+  if (missing.length > 0) {
+    console.log(
+      chalk.dim(
+        `Module de veille non configuré (variables manquantes : ${missing.join(", ")}) -- run ignoré. ` +
+          "Voir AGENTS.md si tu veux l'activer."
+      )
     );
+    return;
   }
+  // Narrowing explicite : la vérification ci-dessus garantit déjà que ces 5 valeurs sont définies.
+  const botToken = token as string;
+  const discordGuildId = guildId as string;
+  const geminiApiKey = geminiKey as string;
+  const channelKey = CHANNEL_KEY as string;
+  const roleKey = ROLE_KEY as string;
 
   const sources = loadNewsSources(SOURCES_PATH);
   console.log(chalk.dim(`Sources chargées : ${sources.length}`));
@@ -65,7 +82,7 @@ async function main() {
     return;
   }
 
-  const digestItems = await summarizeDigest(unseen, geminiKey, process.env.GEMINI_MODEL, SERVER_NAME, NEWS_TOPICS);
+  const digestItems = await summarizeDigest(unseen, geminiApiKey, process.env.GEMINI_MODEL, SERVER_NAME, NEWS_TOPICS);
   console.log(chalk.dim(`Items retenus : ${digestItems.length}`));
 
   mkdirSync("reports", { recursive: true });
@@ -82,13 +99,13 @@ async function main() {
   }
 
   const state = JSON.parse(readFileSync("reports/state.json", "utf8")) as Record<string, string>;
-  const channelId = state[`channel:${CHANNEL_KEY}`];
-  const roleId = state[`role:${ROLE_KEY}`];
+  const channelId = state[`channel:${channelKey}`];
+  const roleId = state[`role:${roleKey}`];
   if (!channelId || !roleId) {
-    throw new Error(`channel:${CHANNEL_KEY} ou role:${ROLE_KEY} absent de reports/state.json -- lance --apply d'abord.`);
+    throw new Error(`channel:${channelKey} ou role:${roleKey} absent de reports/state.json -- lance --apply d'abord.`);
   }
 
-  const { client, guild } = await loginAndFetchGuild(token, guildId);
+  const { client, guild } = await loginAndFetchGuild(botToken, discordGuildId);
   try {
     const channel = await guild.channels.fetch(channelId);
     if (!channel?.isTextBased()) throw new Error("Salon de veille introuvable ou non textuel");

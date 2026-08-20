@@ -1,14 +1,16 @@
 name: Veille quotidienne (module optionnel)
 
-# Ce workflow ne sert que si le module de veille (npm run news) a été configuré -- voir AGENTS.md.
-# Sans config/news_sources.yml rempli et les secrets ci-dessous, il échoue simplement sans effet.
-
+# Ce workflow ne sert que si le module de veille (npm run news) a été demandé et configuré -- voir
+# AGENTS.md. Le déclencheur "schedule" est volontairement désactivé ici : ce dépôt est un modèle, pas
+# un serveur réel, et un cron actif par défaut enverrait des exécutions (et des e-mails d'échec) pour
+# rien. Une fois le module réellement configuré pour un utilisateur (secrets + config/news_sources.yml
+# remplis), l'agent doit décommenter le bloc "schedule" ci-dessous.
 on:
-  schedule:
-    # Deux horaires UTC pour couvrir les deux cas d'heure d'été/hiver -- le script (NEWS_HOUR /
-    # NEWS_TIMEZONE) ne laisse agir que le run qui tombe réellement sur l'heure cible.
-    - cron: "0 10 * * *"
-    - cron: "0 11 * * *"
+  # schedule:
+  #   # Deux horaires UTC pour couvrir les deux cas d'heure d'été/hiver -- le script (NEWS_HOUR /
+  #   # NEWS_TIMEZONE) ne laisse agir que le run qui tombe réellement sur l'heure cible.
+  #   - cron: "0 10 * * *"
+  #   - cron: "0 11 * * *"
   workflow_dispatch:
     inputs:
       force:
